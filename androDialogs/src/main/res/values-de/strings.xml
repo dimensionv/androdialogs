@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="dialogConfirmDeletion" formatted="false">Bitte das L&#x00F6;schen dieses Eintrags
+    best&#x00E4;tigen:\n[%s]</string>
+	<string name="dialogConfirmDeletionSimple">Sind Sie sicher, dass sie die ausge&#x00E4;hlten Eintr&#x00E4;ge
+    l&#x00F6;schen wollen?</string>
+	<string name="confirm">Best&#x00E4;tigen</string>
+	<string name="discard">Verwerfen</string>
+	<string name="OK">OK</string>
+	<string name="showAgain">Wieder anzeigen</string>
+
+</resources>
