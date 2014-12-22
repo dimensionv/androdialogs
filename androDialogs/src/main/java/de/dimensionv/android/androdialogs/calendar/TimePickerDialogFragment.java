@@ -3,8 +3,6 @@
  */
 package de.dimensionv.android.androdialogs.calendar;
 
-import java.util.Calendar;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -13,23 +11,27 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
+
 import de.dimensionv.android.androdialogs.common.DialogConstants;
 
 /**
- * @author mjoellnir
- * 
+ * <code>DialogFragmet</code>-class for displaying a date picker.
+ *
+ * @author Volkmar Seifert
  */
+@SuppressWarnings("UnusedDeclaration")
 public class TimePickerDialogFragment extends CalenderDialogFragment implements OnTimeSetListener {
 
   /**
-   *
+   * Default constructor, initializing this class by calling through to it's parent's constructor.
    */
   public TimePickerDialogFragment() {
     super();
   }
 
   /**
-   * Shows an AlertDialog, set the buttons and populate the Dialog with
+   * Shows an AlertDialog, sets the buttons and populates the Dialog with
    * content.
    * 
    * @param savedInstanceState
@@ -46,6 +48,14 @@ public class TimePickerDialogFragment extends CalenderDialogFragment implements 
         DateFormat.is24HourFormat(activity));
   }
 
+  /**
+   * <p>Sets the time given by the integers <code>hourOfDay</code> and
+   * <code>mintue</code> using a <code>Calendar</code> object internally.</p>
+   *
+   * @param view The <code>TimePicker</code> object used to choose the date.
+   * @param hourOfDay The selected year (0-23) (independent of whether 24 hour-mode is selected or not).
+   * @param minute The selected month (0-59).
+   */
   @Override
   public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
     Calendar calendar = Calendar.getInstance();
@@ -55,6 +65,16 @@ public class TimePickerDialogFragment extends CalenderDialogFragment implements 
     callHandler(calendar);
   }
 
+  /**
+   * <p>Static method to conveniently initialize a <code>TimePickerDialogFragment</code>
+   * object.</p>
+   *
+   * <p>The time displayed by this <code>TimePickerDialogFragment</code> is provided by the
+   * <code>Calendar</code> object handed over to this method.</p>
+   *
+   * @param calendar Time to be displayed by this <code>TimePickerDialogFragment</code>
+   * @return The newly create <code>TimePickerDialogFragment</code>.
+   */
   public static TimePickerDialogFragment createDialog(Calendar calendar) {
     TimePickerDialogFragment dialogFragment = new TimePickerDialogFragment();
     Bundle arguments = new Bundle();

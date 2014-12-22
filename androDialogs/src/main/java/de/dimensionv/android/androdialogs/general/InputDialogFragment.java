@@ -1,5 +1,5 @@
 // //////////////////////////////////////////////////////////////////////////
-// $Id: InputDialogFragment.java,v 1.1 2013/12/05 21:28:25 mjoellnir Exp $
+// $Id$
 //
 // Author: Volkmar Seifert
 // Description:
@@ -50,13 +50,14 @@
 package de.dimensionv.android.androdialogs.general;
 
 import android.app.AlertDialog.Builder;
-import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import de.dimensionv.android.androdialogs.BaseDialogFragment;
 import de.dimensionv.android.androdialogs.R;
 import de.dimensionv.android.androdialogs.common.DialogConstants;
+import de.dimensionv.android.androdialogs.handlers.ConfirmationActionHandler;
 import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 
 /**
@@ -68,18 +69,60 @@ import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
  * @author mjoellnir
  * @version 1.0
  */
-public class InputDialogFragment extends BaseDialogFragment implements OnClickListener {
+@SuppressWarnings("UnusedDeclaration")
+public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHandler> {
 
   public InputDialogFragment() {
-    super(true);
+    super();
   }
 
   @Override
-  protected void populateDialog(Builder builder, Bundle arguments) {
+  public void populateDialog(Builder builder, Bundle arguments) {
     LayoutInflater li = getActivity().getLayoutInflater();
     builder.setView(callInterceptor(li.inflate(arguments.getInt(DialogConstants.DIALOG_RESOURCE_ID), null)));
     builder.setPositiveButton(R.string.confirm, this);
     builder.setNegativeButton(R.string.discard, this);
+  }
+
+  /**
+   * This method will be invoked when the dialog is canceled.
+   *
+   * @param dialog
+   *          The dialog that was canceled will be passed into the method.
+   */
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    super.onCancel(dialog);
+    ConfirmationActionHandler actionHandler = controller.getActionHandler();
+    if(actionHandler != null) {
+      actionHandler.onDiscard(this);
+    }
+  }
+
+  /**
+   * This method will be invoked when a button in the dialog is clicked.
+   *
+   * @param dialog
+   *          The dialog that received the click.
+   * @param which
+   *          The button that was clicked (e.g. BUTTON1) or the position of the
+   *          item clicked.
+   */
+  @Override
+  public void onClick(DialogInterface dialog, int which) {
+    ConfirmationActionHandler actionHandler = controller.getActionHandler();
+    if(actionHandler != null) {
+      switch(which) {
+        case DialogInterface.BUTTON_POSITIVE: {
+          actionHandler.onConfirm(this);
+          break;
+        }
+        case DialogInterface.BUTTON_NEGATIVE: {
+          actionHandler.onDiscard(this);
+          break;
+        }
+      }
+    }
   }
 
   public static InputDialogFragment createDialog(int dialogResourceID) {

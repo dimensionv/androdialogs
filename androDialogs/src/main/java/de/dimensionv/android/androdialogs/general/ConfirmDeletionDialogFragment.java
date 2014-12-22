@@ -51,11 +51,13 @@
 package de.dimensionv.android.androdialogs.general;
 
 import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import de.dimensionv.android.androdialogs.BaseDialogFragment;
 import de.dimensionv.android.androdialogs.R;
 import de.dimensionv.android.androdialogs.common.DialogConstants;
+import de.dimensionv.android.androdialogs.handlers.ConfirmationActionHandler;
 
 /**
  * <p> A confirmation-dialog specialised for deletion/removal of things. It has two constructors:
@@ -69,15 +71,16 @@ import de.dimensionv.android.androdialogs.common.DialogConstants;
  * @author mjoellnir
  * @version 1.0
  */
-public class ConfirmDeletionDialogFragment extends BaseDialogFragment {
+@SuppressWarnings("UnusedDeclaration")
+public class ConfirmDeletionDialogFragment extends BaseDialogFragment<ConfirmationActionHandler> {
 
 
   public ConfirmDeletionDialogFragment() {
-    super(true);
+    super();
   }
 
   @Override
-  protected void populateDialog(Builder builder, Bundle arguments) {
+  public void populateDialog(Builder builder, Bundle arguments) {
     int messageResourceID = arguments.getBoolean(DialogConstants.SIMPLE)
                               ? R.string.dialogConfirmDeletionSimple
                               : R.string.dialogConfirmDeletion;
@@ -124,20 +127,21 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment {
   }
 
   /**
-   * <p>
-   * This constructor takes a message-id for displaying a message and the
-   * data-string helping the user to verify what should be deleted.
-   * </p>
-   * <p>
-   * The message-string has to contain one "%s" in order for the data to appear
-   * within it.
-   * </p>
+   * <p>Static method to conveniently initialize a <code>ConfirmDeletionDialogFragment</code>
+   * object.</p>
+   *
+   * <p>This method initializes the dialog fragment with a custom message and some data that is meant
+   * to specify what to actually delete.<br />
+   * The message-string provided by the <code>messageResourceID</code> has to contain one
+   * "<code>%s</code>" in order for the <code>data</code> to appear within it.</p>
    *
    * @param messageResourceID
    *          The message-template to be used
    * @param data
    *          the string that helps the user identify/verify the data, which
    *          deletion should be confirmed.
+   *
+   * @return The new ConfirmDeletionDialogFragment object.
    */
   public static ConfirmDeletionDialogFragment createDialog(int messageResourceID, String data) {
     ConfirmDeletionDialogFragment dialogFragment = createDialog(data);
@@ -145,9 +149,47 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment {
     return dialogFragment;
   }
 
-  public static ConfirmDeletionDialogFragment createDialog(int messageResourceID, String data, boolean simpleMessage) {
-    ConfirmDeletionDialogFragment dialogFragment = createDialog(data, simpleMessage);
-    dialogFragment.getArguments().putInt(DialogConstants.MESSAGE, messageResourceID);
-    return dialogFragment;
+  /**
+   * <p>Static method to conveniently initialize a <code>ConfirmDeletionDialogFragment</code>
+   * object.</p>
+   *
+   * <p>This method initializes the dialog fragment with a default message.</p>
+   *
+   * @return The new ConfirmDeletionDialogFragment object.
+   */
+  public static ConfirmDeletionDialogFragment createDialog() {
+    return createDialog(null, true);
+  }
+
+  /**
+   * This method will be invoked when the dialog is canceled.
+   *
+   * @param dialog
+   *          The dialog that was canceled will be passed into the method.
+   */
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    super.onCancel(dialog);
+    ConfirmationActionHandler actionHandler = controller.getActionHandler();
+    if(actionHandler != null) {
+      actionHandler.onDiscard(this);
+    }
+  }
+
+  @Override
+  public void onClick(DialogInterface dialog, int which) {
+    ConfirmationActionHandler actionHandler = controller.getActionHandler();
+    if(actionHandler != null) {
+      switch(which) {
+        case DialogInterface.BUTTON_POSITIVE: {
+          actionHandler.onConfirm(this);
+          break;
+        }
+        case DialogInterface.BUTTON_NEGATIVE: {
+          actionHandler.onDiscard(this);
+          break;
+        }
+      }
+    }
   }
 }

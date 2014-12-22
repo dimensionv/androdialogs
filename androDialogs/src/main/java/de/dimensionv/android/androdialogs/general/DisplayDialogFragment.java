@@ -1,5 +1,5 @@
 // //////////////////////////////////////////////////////////////////////////
-// $Id: DisplayDialogFragment.java,v 1.1 2013/12/05 21:28:25 mjoellnir Exp $
+// $Id$
 //
 // Author: Volkmar Seifert
 // Description:
@@ -50,37 +50,51 @@
 package de.dimensionv.android.androdialogs.general;
 
 import android.app.AlertDialog.Builder;
-import android.content.DialogInterface.OnClickListener;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import de.dimensionv.android.androdialogs.BaseDialogFragment;
 import de.dimensionv.android.androdialogs.common.DialogConstants;
+import de.dimensionv.android.androdialogs.handlers.ActionHandler;
 import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 
 /**
  * <p>
- * An InputDialog is a dialog which can be used to let the user enter some data,
- * when a complete activity for handling that would be overkill.
+ * A DisplayDialog is a dialog which can be used to display something that does not require much
+ * interaction from user-side. A good example is a progress-dialog.
  * </p>
  * 
  * @author mjoellnir
  * @version 1.0
  */
-public class DisplayDialogFragment extends BaseDialogFragment implements OnClickListener {
+@SuppressWarnings("UnusedDeclaration")
+public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
 
-  private int dialogResourceID = 0;
-
+  /**
+   * Default constructor that creates and initializes a new instance of the
+   * <code>DisplayDialogFragment</code>-class.
+   */
   public DisplayDialogFragment() {
     super(false);
   }
 
   @Override
-  protected void populateDialog(Builder builder, Bundle arguments) {
+  public void populateDialog(Builder builder, Bundle arguments) {
     LayoutInflater li = getActivity().getLayoutInflater();
     builder.setView(callInterceptor(li.inflate(arguments.getInt(DialogConstants.DIALOG_RESOURCE_ID), null)));
   }
 
+  /**
+   * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
+   * resource-id.</p>
+   *
+   * The method takes care of proper instantiation and initialization of the the fragment, and then
+   * returns it.
+   *
+   * @param dialogResourceID The layout resource ID which should be displayed by this dialog fragment.
+   * @return The new <code>DisplayDialogFragment</code> object.
+   */
   public static DisplayDialogFragment createDialog(int dialogResourceID) {
     DisplayDialogFragment dialogFragment = new DisplayDialogFragment();
     Bundle arguments = new Bundle();
@@ -89,9 +103,27 @@ public class DisplayDialogFragment extends BaseDialogFragment implements OnClick
     return dialogFragment;
   }
 
+  /**
+   * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
+   * resource-id and a ViewInterceptor.</p>
+   *
+   * The method takes care of proper instantiation and initialization of the the fragment, and then
+   * returns it.
+   *
+   * @param dialogResourceID The layout resource ID which should be displayed by this dialog fragment.
+   * @param viewInterceptor The <code>ViewInterceptor</code>-object that should be used to cease
+   *                        control over the dialog's view-elements.
+   *
+   * @return The new <code>DisplayDialogFragment</code> object.
+   */
   public static DisplayDialogFragment createDialog(int dialogResourceID, ViewInterceptor viewInterceptor) {
     DisplayDialogFragment dialogFragment = createDialog(dialogResourceID);
     dialogFragment.setViewInterceptor(viewInterceptor);
     return dialogFragment;
+  }
+
+  @Override
+  public void onClick(DialogInterface dialog, int which) {
+    // do nothing by default, this kind of dialog is opened and closed by the app, not by the user.
   }
 }

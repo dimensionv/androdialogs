@@ -1,5 +1,5 @@
 // //////////////////////////////////////////////////////////////////////////
-// $Id: ConfirmationActionHandler.java,v 1.1 2013/12/05 21:28:52 mjoellnir Exp $
+// $Id$
 //
 // Author: Volkmar Seifert
 // Description:
@@ -48,7 +48,7 @@
 // //////////////////////////////////////////////////////////////////////////
 package de.dimensionv.android.androdialogs.handlers;
 
-import android.support.v4.app.DialogFragment;
+import de.dimensionv.android.androdialogs.common.DialogFragmentInterface;
 
 /**
  * Interface for event-handling of the confirmation-dialog
@@ -56,7 +56,7 @@ import android.support.v4.app.DialogFragment;
  * @author mjoellnir
  * @version 1.0
  */
-public interface ConfirmationActionHandler {
+public interface ConfirmationActionHandler  extends ActionHandler {
   /**
    * Event-handler method when the user presses the confirmation-button in the
    * confirmation-dialog.
@@ -64,7 +64,7 @@ public interface ConfirmationActionHandler {
    * @param dialog
    *          The Dialog in which the button was pressed.
    */
-  public void onConfirm(DialogFragment dialog);
+  public void onConfirm(DialogFragmentInterface dialog);
 
   /**
    * Event-handler method when the user presses the cancel-button in the
@@ -73,5 +73,5 @@ public interface ConfirmationActionHandler {
    * @param dialog
    *          The Dialog in which the button was pressed.
    */
-  public void onDiscard(DialogFragment dialog);
+  public void onDiscard(DialogFragmentInterface dialog);
 }

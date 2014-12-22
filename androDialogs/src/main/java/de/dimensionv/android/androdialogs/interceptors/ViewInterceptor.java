@@ -1,5 +1,5 @@
 // //////////////////////////////////////////////////////////////////////////
-// $Id: ViewInterceptor.java,v 1.1 2013/12/05 21:29:19 mjoellnir Exp $
+// $Id$
 //
 // Author: Volkmar Seifert
 // Description:

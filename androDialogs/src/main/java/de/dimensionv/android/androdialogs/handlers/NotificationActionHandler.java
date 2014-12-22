@@ -1,5 +1,5 @@
 // //////////////////////////////////////////////////////////////////////////
-// $Id: NotificationActionHandler.java,v 1.1 2013/12/05 21:28:52 mjoellnir Exp $
+// $Id$
 //
 // Author: Volkmar Seifert
 // Description:
@@ -54,13 +54,12 @@ package de.dimensionv.android.androdialogs.handlers;
  * @author mjoellnir
  * @version 1.0
  */
-public interface NotificationActionHandler {
+public interface NotificationActionHandler extends ActionHandler {
   /**
    * Event-handler method when the user presses the button in the
    * notification-dialog.
-   * 
-   * @param noficationID
-   *          The notification-ID of the dialog
+   *
+   * @param notificationID The notification-ID of the dialog
    */
   public void onClose(int notificationID);
 }

@@ -56,6 +56,7 @@ import android.os.Bundle;
 import android.text.util.Linkify;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import de.dimensionv.android.androdialogs.BaseDialogFragment;
 import de.dimensionv.android.androdialogs.R;
 import de.dimensionv.android.androdialogs.common.DialogConstants;
@@ -69,30 +70,11 @@ import de.dimensionv.android.androdialogs.handlers.NotificationActionHandler;
  * @author mjoellnir
  * @version 1.0
  */
-public class NotificationDialogFragment extends BaseDialogFragment {
-
-  private NotificationActionHandler handler = null;
+@SuppressWarnings("UnusedDeclaration")
+public class NotificationDialogFragment extends BaseDialogFragment<NotificationActionHandler> {
 
   public NotificationDialogFragment() {
-    super(false);
-  }
-
-  /**
-   * Called when a fragment is first attached to its activity. onCreate(Bundle)
-   * will be called after this.
-   * 
-   * @param activity
-   *          the Activity this dialog is attached to.
-   */
-  @Override
-  public void onAttach(Activity activity) {
-    super.onAttach(activity);
-    try {
-      handler = (NotificationActionHandler) activity;
-    } catch(ClassCastException ex) {
-      throw new ClassCastException(activity.toString() +
-          " does not implement the interface NotificationActionHandler.");
-    }
+    super();
   }
 
   /**
@@ -108,7 +90,7 @@ public class NotificationDialogFragment extends BaseDialogFragment {
   public void onClick(DialogInterface dialog, int which) {
     switch(which) {
       case DialogInterface.BUTTON_NEUTRAL: {
-        handler.onClose(getArguments().getInt(DialogConstants.NOTIFICATION_ID));
+        controller.getActionHandler().onClose(getArguments().getInt(DialogConstants.NOTIFICATION_ID));
         break;
       }
     }
@@ -125,7 +107,7 @@ public class NotificationDialogFragment extends BaseDialogFragment {
   }
 
   @Override
-  protected void populateDialog(Builder builder, Bundle arguments) {
+  public void populateDialog(Builder builder, Bundle arguments) {
     Activity activity = getActivity();
     ScrollView sv = new ScrollView(activity);
     TextView tv = new TextView(activity);
