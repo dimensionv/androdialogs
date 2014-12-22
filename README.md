@@ -11,7 +11,7 @@ introduction of the DialogFragments.
 
 ## Why should I use this library
 Well, honestly, I don't know. Why use any library out there at all?
-Probably because it will make you life easier, once you got the hang
+Probably because it will make your life easier, once you got the hang
 of the library in question.
 In the end it's up to you if you like to write the same code over and
 over again, or simply use a library that will take care of most things
