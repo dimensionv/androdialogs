@@ -21,9 +21,9 @@ and lets you focus on what you really want to do.
 Yes and no. This library actually comes in two flavors, and you need to decide
 on which flavor to use.
 
-* ** *Native* Android Fragments**: this flavor only works on Android API level
+* **_Native_ Android Fragments**: this flavor only works on Android API level
   11 and above. It uses the standard native Android DialogFragments
-* ** *Support* Android Fragments**: this flavor works on all Android API levels,
+* **_Support_ Android Fragments**: this flavor works on all Android API levels,
   if you add the support-v4 libraries to your project.
 
 ## The Dialogs provided by *AndroDialogs*
