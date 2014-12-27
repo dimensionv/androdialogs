@@ -17,87 +17,87 @@ def ArrayList<String> flavorList = new ArrayList<String>()
 
 android {
 
-    if (versionPropsFile.canRead()) {
-        versionProps.load(new FileInputStream(versionPropsFile))
+  if(versionPropsFile.canRead()) {
+    versionProps.load(new FileInputStream(versionPropsFile))
 
-        majorVersionCode = versionProps['MAJOR'].toInteger()
-        minorVersionCode = versionProps['MINOR'].toInteger()
-        hotfixVersionCode = versionProps['HOTFIX'].toInteger()
+    majorVersionCode = versionProps['MAJOR'].toInteger()
+    minorVersionCode = versionProps['MINOR'].toInteger()
+    hotfixVersionCode = versionProps['HOTFIX'].toInteger()
 
-        buildNr = versionProps['BUILD_NUMBER'].toInteger() + 1
+    buildNr = versionProps['BUILD_NUMBER'].toInteger() + 1
 
-        snapshotBuild = versionProps['SNAPSHOT_BUILD'].toBoolean()
+    snapshotBuild = versionProps['SNAPSHOT_BUILD'].toBoolean()
 
-        versionProps['BUILD_NUMBER'] = buildNr.toString()
-    } else {
-        versionProps['MAJOR'] = majorVersionCode.toString()
-        versionProps['MINOR'] = minorVersionCode.toString()
-        versionProps['HOTFIX'] = minorVersionCode.toString()
-        versionProps['BUILD_NUMBER'] = buildNr.toString()
-        versionProps['SNAPSHOT_BUILD'] = snapshotBuild.toString()
+    versionProps['BUILD_NUMBER'] = buildNr.toString()
+  } else {
+    versionProps['MAJOR'] = majorVersionCode.toString()
+    versionProps['MINOR'] = minorVersionCode.toString()
+    versionProps['HOTFIX'] = minorVersionCode.toString()
+    versionProps['BUILD_NUMBER'] = buildNr.toString()
+    versionProps['SNAPSHOT_BUILD'] = snapshotBuild.toString()
+  }
+
+  versionProps.store(versionPropsFile.newWriter(), null)
+
+  versionString = String.format("%d.%d.%d-%d", majorVersionCode, minorVersionCode, hotfixVersionCode, buildNr)
+
+  allprojects {
+    version = snapshotBuild ? versionString + '-SNAPSHOT' : versionString
+    ext.snapshotBuild = snapshotBuild
+  }
+
+  compileSdkVersion ANDROID_BUILD_SDK_VERSION.toInteger()
+  buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
+
+  publishNonDefault true
+
+  defaultConfig {
+    versionCode buildNr
+    versionName versionString
+    minSdkVersion 8
+    targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION.toInteger()
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+      debuggable false
+      jniDebuggable false
+      renderscriptDebuggable false
+      zipAlignEnabled true
     }
-
-    versionProps.store(versionPropsFile.newWriter(), null)
-
-    versionString = String.format("%d.%d.%d-%d", majorVersionCode, minorVersionCode, hotfixVersionCode, buildNr)
-
-    allprojects {
-        version = snapshotBuild ? versionString + '-SNAPSHOT' : versionString
-        ext.'snapshotBuild' = snapshotBuild
+    debug {
+      minifyEnabled false
+      debuggable true
+      versionNameSuffix '-SNAPSHOT'
+      zipAlignEnabled true
     }
-
-    compileSdkVersion 21
-    buildToolsVersion '21.1.1'
-
-    publishNonDefault true
-
-    defaultConfig {
-        versionCode buildNr
-        versionName versionString
-        minSdkVersion 8
-        targetSdkVersion 21
+  }
+  productFlavors {
+    nativelibs {
+      versionCode buildNr
+      versionName versionString
+      minSdkVersion 11
+      targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION.toInteger()
+      flavorList.add("nativelibs")
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            debuggable false
-            jniDebuggable false
-            renderscriptDebuggable false
-            zipAlignEnabled true
-        }
-        debug {
-            minifyEnabled false
-            debuggable true
-            versionNameSuffix '-SNAPSHOT'
-            zipAlignEnabled true
-        }
+    supportlibs {
+      versionCode buildNr
+      versionName versionString
+      minSdkVersion 8
+      targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION.toInteger()
+      flavorList.add("supportlibs")
     }
-    productFlavors {
-        nativelibs {
-            versionCode buildNr
-            versionName versionString
-            minSdkVersion 11
-            targetSdkVersion 21
-            flavorList.add("nativelibs")
-        }
-        supportlibs {
-            versionCode buildNr
-            versionName versionString
-            minSdkVersion 8
-            targetSdkVersion 21
-            flavorList.add("supportlibs")
-        }
-    }
+  }
 
-    ext.flavors = flavorList
+  ext.flavors = flavorList
 
 }
 
 dependencies {
-    //noinspection GradleCompatible
-    supportlibsCompile 'com.android.support:support-v4:20.0.0'
+  //noinspection GradleCompatible
+  supportlibsCompile 'com.android.support:support-v4:20.0.0'
 }
 
 apply from: '../mavenPush.gradle'

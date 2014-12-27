@@ -1,6 +1,7 @@
 // Gradle utility scripts
 //
 // Script:          mavenPush
+//
 // Description:
 //
 // Gradle-script containing all the magic necessary to perform building, packaging, signing and
@@ -87,8 +88,7 @@ android.libraryVariants.all { variant ->
 
     ext.androidJar = files(plugins.findPlugin("com.android.library").getBootClasspath())
     classpath = files(variant.javaCompile.classpath.files) + ext.androidJar
-    exclude '**/internal/**'
-
+    
     options.links("http://docs.oracle.com/javase/7/docs/api/");
     options.links("http://developer.android.com/reference/");
 
