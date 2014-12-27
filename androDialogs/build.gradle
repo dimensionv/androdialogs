@@ -13,6 +13,8 @@ def versionString
 
 def Properties versionProps = new Properties()
 
+def ArrayList<String> flavorList = new ArrayList<String>()
+
 android {
 
     if (versionPropsFile.canRead()) {
@@ -64,14 +66,12 @@ android {
             jniDebuggable false
             renderscriptDebuggable false
             zipAlignEnabled true
-            allprojects { ext."release" = true }
         }
         debug {
             minifyEnabled false
             debuggable true
             versionNameSuffix '-SNAPSHOT'
             zipAlignEnabled true
-            allprojects { ext."release" = false }
         }
     }
     productFlavors {
@@ -80,14 +80,19 @@ android {
             versionName versionString
             minSdkVersion 11
             targetSdkVersion 21
+            flavorList.add("nativelibs")
         }
         supportlibs {
             versionCode buildNr
             versionName versionString
             minSdkVersion 8
             targetSdkVersion 21
+            flavorList.add("supportlibs")
         }
     }
+
+    ext.flavors = flavorList
+
 }
 
 dependencies {
