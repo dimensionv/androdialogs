@@ -9,13 +9,16 @@ is properly done by the Android System. This means that certain side-effects
 like leaked activities are less likely to happen than it was before the
 introduction of the DialogFragments.
 
-## Why should I use this library
-Well, honestly, I don't know. Why use any library out there at all?
-Probably because it will make your life easier, once you got the hang
-of the library in question.
-In the end it's up to you if you like to write the same code over and
-over again, or simply use a library that will take care of most things
-and lets you focus on what you really want to do.
+## Prebuilt Version
+*AndroDialogs* is available via Maven Central. You can use it no matter
+if you use maven, gradle or ant/ivy. Simply add it as a dependency into
+you build-system's files.
+
+Simply use these values:
+
+* **Group-ID**: de.dimensionv
+* **Artifact-ID**: androdialogs
+* **Version**: 1.0.0-196 (You may want to check for the latest version in the repo itself...)
 
 ## Wait, Dialog*Fragments*? That means API-Level 11 and above!?
 Yes and no. This library actually comes in two flavors, and you need to decide
