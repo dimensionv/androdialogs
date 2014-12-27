@@ -17,7 +17,7 @@ you build-system's files.
 Simply use these values:
 
 * **Group-ID**: de.dimensionv
-* **Artifact-ID**: androdialogs
+* **Artifact-ID**: androDialogs-nativelibs or androDialogs-supportlibs
 * **Version**: 1.0.0-196 (You may want to check for the latest version in the repo itself...)
 
 ## Wait, Dialog*Fragments*? That means API-Level 11 and above!?
