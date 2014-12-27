@@ -18,7 +18,48 @@ Simply use these values:
 
 * **Group-ID**: de.dimensionv
 * **Artifact-ID**: androDialogs-nativelibs or androDialogs-supportlibs
+* **Classifier**: nativelibsRelease or supportLibsRelease
 * **Version**: 1.0.0-196 (You may want to check for the latest version in the repo itself...)
+* **Packaging**: aar
+
+For gradle, this would look like
+
+```
+compile 'de.dimensionv:androDialogs-nativelibs:1.0.0-196:nativelibsRelease@aar'
+```
+for the nativelibs flavor, and like
+
+```
+compile 'de.dimensionv:androDialogs-supportlibs:1.0.0-196:supportlibsRelease@aar'
+```
+for the supportlibs flavor.
+
+
+For maven, this would look like
+
+```
+<dependency>
+  <groupId>de.dimensionv</groupId>
+  <artifactId>androDialogs-nativelibs</artifactId>
+  <version>1.0.0-196</version>
+  <classifier>nativelibsRelease</classifier>
+  <type>aar</type>
+</dependency>
+```
+for the nativelibs flavor, and like
+
+```
+<dependency>
+  <groupId>de.dimensionv</groupId>
+  <artifactId>androDialogs-supportlibs</artifactId>
+  <version>1.0.0-196</version>
+  <classifier>supportlibsRelease</classifier>
+  <type>aar</type>
+</dependency>
+```
+for the supportlibs flavor.
+
+For other dependency management systems and/or build-systems, please refer to their respective documentations.
 
 ## Wait, Dialog*Fragments*? That means API-Level 11 and above!?
 Yes and no. This library actually comes in two flavors, and you need to decide
