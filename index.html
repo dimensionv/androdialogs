@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>AndroDialogs by dimensionv</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>AndroDialogs</h1>
+        <h2>Standard Dialogs and dialog-templates using DialogFragments</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/dimensionv/androdialogs/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/dimensionv/androdialogs/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/dimensionv/androdialogs" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="androdialogs" class="anchor" href="#androdialogs" aria-hidden="true"><span class="octicon octicon-link"></span></a>AndroDialogs</h1>
+
+<h2>
+<a id="synopsys" class="anchor" href="#synopsys" aria-hidden="true"><span class="octicon octicon-link"></span></a>Synopsys</h2>
+
+<p><em>AndroDialogs</em> is a library providing easy to use standard dialogs and
+dialog-templates using DialogFragments.
+It's goal is to make use of dialogs as simple as possible. By using
+DialogFragments, it is ensured that the handling of the dialogs themselves
+is properly done by the Android System. This means that certain side-effects
+like leaked activities are less likely to happen than it was before the
+introduction of the DialogFragments.</p>
+
+<h2>
+<a id="prebuilt-version" class="anchor" href="#prebuilt-version" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prebuilt Version</h2>
+
+<p><em>AndroDialogs</em> is available via Maven Central. You can use it no matter
+if you use maven, gradle or ant/ivy. Simply add it as a dependency into
+you build-system's files.</p>
+
+<p>Simply use these values:</p>
+
+<ul>
+<li>
+<strong>Group-ID</strong>: de.dimensionv</li>
+<li>
+<strong>Artifact-ID</strong>: androDialogs-nativelibs or androDialogs-supportlibs</li>
+<li>
+<strong>Classifier</strong>: nativelibsRelease or supportLibsRelease</li>
+<li>
+<strong>Version</strong>: 1.0.0-196 (You may want to check for the latest version in the repo itself...)</li>
+<li>
+<strong>Packaging</strong>: aar</li>
+</ul>
+
+<p>For gradle, this would look like</p>
+
+<pre><code>compile 'de.dimensionv:androDialogs-nativelibs:1.0.0-196:nativelibsRelease@aar'
+</code></pre>
+
+<p>for the nativelibs flavor, and like</p>
+
+<pre><code>compile 'de.dimensionv:androDialogs-supportlibs:1.0.0-196:supportlibsRelease@aar'
+</code></pre>
+
+<p>for the supportlibs flavor.</p>
+
+<p>For maven, this would look like</p>
+
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;de.dimensionv&lt;/groupId&gt;
+  &lt;artifactId&gt;androDialogs-nativelibs&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0-196&lt;/version&gt;
+  &lt;classifier&gt;nativelibsRelease&lt;/classifier&gt;
+  &lt;type&gt;aar&lt;/type&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>for the nativelibs flavor, and like</p>
+
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;de.dimensionv&lt;/groupId&gt;
+  &lt;artifactId&gt;androDialogs-supportlibs&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0-196&lt;/version&gt;
+  &lt;classifier&gt;supportlibsRelease&lt;/classifier&gt;
+  &lt;type&gt;aar&lt;/type&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>for the supportlibs flavor.</p>
+
+<p>For other dependency management systems and/or build-systems, please refer to their respective documentations.</p>
+
+<h2>
+<a id="wait-dialogfragments-that-means-api-level-11-and-above" class="anchor" href="#wait-dialogfragments-that-means-api-level-11-and-above" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wait, Dialog<em>Fragments</em>? That means API-Level 11 and above!?</h2>
+
+<p>Yes and no. This library actually comes in two flavors, and you need to decide
+on which flavor to use.</p>
+
+<ul>
+<li>
+<strong><em>Native</em> Android Fragments</strong>: this flavor only works on Android API level
+11 and above. It uses the standard native Android DialogFragments</li>
+<li>
+<strong><em>Support</em> Android Fragments</strong>: this flavor works on all Android API levels,
+if you add the support-v4 libraries to your project.</li>
+</ul>
+
+<h2>
+<a id="the-dialogs-provided-by-androdialogs" class="anchor" href="#the-dialogs-provided-by-androdialogs" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dialogs provided by <em>AndroDialogs</em>
+</h2>
+
+<h3>
+<a id="the-standard-dialogs" class="anchor" href="#the-standard-dialogs" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Standard Dialogs</h3>
+
+<p>The <em>AndroDialogs</em> library provides a number of ready-to-use standard dialogs:</p>
+
+<ul>
+<li>
+<strong>NotificationDialogFragment</strong>: A DialogFragment to display a simple message
+or notificiation</li>
+<li>
+<strong>HintDialogFragment</strong>: A DialogFragment to display a hint, with the option
+to not display it again.</li>
+<li>
+<strong>ConfirmationDeletionDialogFragment</strong> A DialogFragment for confirmation
+questions, not just for deletion, though that's the default case.</li>
+<li>
+<strong>DatePickerDialogFragment</strong>: A DialogFragment for selecting a date.</li>
+<li>
+<strong>TimePickerDialogFragment</strong>: A DialogFragment for selecting a time of day.</li>
+</ul>
+
+<h3>
+<a id="the-dialog-templates" class="anchor" href="#the-dialog-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Dialog Templates</h3>
+
+<p>In addition to the ready-to-use standard dialogs, <em>AndroDialogs</em> also provides two
+distinct templates that can be filled with any arbitrary layout to either display
+information (like a progress dialog), or to actualy have the user enter some data,
+which is then processed by the app.</p>
+
+<ul>
+<li>
+<strong>DisplayDialogFragment</strong>: A Dialog without controls (i.e. no buttons), which is
+intended to display messages and/or progress bars / information and which is
+completely controlled by the app (hence no buttons)</li>
+<li>
+<strong>InputDialogFragment</strong>: A DialogFragment to have the user enter arbitrary data.
+The DialogFragment requires a customized layout and lets the caller control the
+dialog-elements as well as which button was pressed via callbacks.</li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
