@@ -75,7 +75,7 @@ import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHandler> {
 
   public InputDialogFragment() {
-    super();
+    super(ConfirmationActionHandler.class);
   }
 
   @Override

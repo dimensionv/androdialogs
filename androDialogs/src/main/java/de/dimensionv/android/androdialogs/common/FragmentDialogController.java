@@ -54,8 +54,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 
-import java.lang.reflect.ParameterizedType;
-
 import de.dimensionv.android.androdialogs.handlers.ActionHandler;
 import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 
@@ -80,9 +78,9 @@ public class FragmentDialogController<T extends ActionHandler> {
   private ViewInterceptor viewInterceptor = null;
   private DialogFragmentInterface parent = null;
 
+  private Class<T> actionHandlerType = null;
   private T actionHandler = null;
   private boolean registerHandler = true;
-  private Class typeClass = null;
 
   /**
    * <p>This constructor initializes the <code>BaseDialogFragment</code>. All descendents must call
@@ -96,11 +94,11 @@ public class FragmentDialogController<T extends ActionHandler> {
    *
    * @param registerHandler Flag whether to register an <code>ActionHandler</code> or not.
    */
-  public FragmentDialogController(boolean registerHandler, DialogFragmentInterface parent) {
+  public FragmentDialogController(Class<T> type, boolean registerHandler, DialogFragmentInterface parent) {
+    actionHandlerType = type;
     this.registerHandler = registerHandler;
     this.parent = parent;
     dialogTag = parent.getClass().getName() + ".TAG";
-    typeClass = ((Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
   }
 
 
@@ -117,7 +115,6 @@ public class FragmentDialogController<T extends ActionHandler> {
     // Use the Builder class for convenient dialog construction
     Builder builder = new Builder(parent.getActivity());
     parent.populateDialog(builder, parent.getArguments());
-    builder.setOnCancelListener(parent);
     // Create the AlertDialog object and return it
     return builder.create();
   }
@@ -135,7 +132,7 @@ public class FragmentDialogController<T extends ActionHandler> {
       try {
         actionHandler = (T) activity;
       } catch(ClassCastException ex) {
-        throw new ClassCastException(String.format("%s does not implement an %s interface.", activity.getClass().getName(), typeClass.getSimpleName()));
+        throw new ClassCastException(String.format("%s does not implement a %s interface.", activity.getClass().getName(), actionHandlerType.getSimpleName()));
       }
     }
   }

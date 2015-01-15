@@ -83,8 +83,8 @@ public abstract class BaseDialogFragment<T extends ActionHandler> extends Dialog
    * <p>Default constructor, actually forwarding to <code>BaseDialogFragment(boolean registerHandler)</code>
    * with <code>registerHandler</code> being set to <code>true</code>.</p>
    */
-  public BaseDialogFragment() {
-    this(true);
+  public BaseDialogFragment(Class<T> type) {
+    this(type, true);
   }
 
   /**
@@ -99,8 +99,8 @@ public abstract class BaseDialogFragment<T extends ActionHandler> extends Dialog
    *
    * @param registerHandler Flag whether to register an <code>ActionHandler</code> or not.
    */
-  public BaseDialogFragment(boolean registerHandler) {
-    controller = new FragmentDialogController<T>(registerHandler, this);
+  public BaseDialogFragment(Class<T> type, boolean registerHandler) {
+    controller = new FragmentDialogController<T>(type, registerHandler, this);
   }
 
 

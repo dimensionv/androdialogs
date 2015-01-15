@@ -77,7 +77,7 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
 
 
   public ConfirmDeletionDialogFragment() {
-    super();
+    super(ConfirmationActionHandler.class);
   }
 
   @Override

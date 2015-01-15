@@ -31,7 +31,7 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
   private CheckBox cbShowAgain = null;
 
   public HintDialogFragment() {
-    super();
+    super(HintActionHandler.class);
   }
 
   /**

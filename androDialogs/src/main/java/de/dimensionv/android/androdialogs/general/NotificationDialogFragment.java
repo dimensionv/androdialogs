@@ -73,7 +73,7 @@ import de.dimensionv.android.androdialogs.handlers.NotificationActionHandler;
 public class NotificationDialogFragment extends BaseDialogFragment<NotificationActionHandler> {
 
   public NotificationDialogFragment() {
-    super();
+    super(NotificationActionHandler.class);
   }
 
   /**

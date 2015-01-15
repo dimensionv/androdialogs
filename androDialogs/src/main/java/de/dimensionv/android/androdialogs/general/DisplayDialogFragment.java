@@ -75,7 +75,7 @@ public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
    * <code>DisplayDialogFragment</code>-class.
    */
   public DisplayDialogFragment() {
-    super(false);
+    super(ActionHandler.class, false);
   }
 
   @Override
