@@ -6,7 +6,9 @@ package de.dimensionv.android.androdialogs.handlers;
 /**
  * Interface for event-handling of the hint-dialog
  *
- * @author mjoellnir
+ * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 public interface HintActionHandler extends ActionHandler {
 

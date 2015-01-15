@@ -19,6 +19,8 @@ import de.dimensionv.android.androdialogs.common.DialogConstants;
  * <code>DialogFragmet</code>-class for displaying a date picker.
  *
  * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public class TimePickerDialogFragment extends CalenderDialogFragment implements OnTimeSetListener {

@@ -12,6 +12,9 @@ import de.dimensionv.android.androdialogs.handlers.CalenderDialogActionHandler;
  *
  * <p>Please note that this class is intended to be used directly.</p>
  *
+ * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 abstract class CalenderDialogFragment extends DialogFragment {
 

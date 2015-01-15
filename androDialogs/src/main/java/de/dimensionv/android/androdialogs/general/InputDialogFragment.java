@@ -53,6 +53,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import de.dimensionv.android.androdialogs.BaseDialogFragment;
 import de.dimensionv.android.androdialogs.R;
@@ -66,8 +67,9 @@ import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
  * when a complete activity for handling that would be overkill.
  * </p>
  *
- * @author mjoellnir
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHandler> {
@@ -125,6 +127,17 @@ public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHa
     }
   }
 
+  /**
+   * <p>Static method to conveniently initialize a {@code InputDialogFragment} object.</p>
+   *
+   * <p>This method initialized the dialog with a layout resource ID, but not with a
+   * {@link ViewInterceptor}. The {@code ViewInterceptor} has to be set manually, if necessary,
+   * by using the method {@link InputDialogFragment#setViewInterceptor(ViewInterceptor)}.</p>
+   *
+   * @param dialogResourceID The resource-id for the dialog's layout.
+   *
+   * @return The new {@code InputDialogFragment} object.
+   */
   public static InputDialogFragment createDialog(int dialogResourceID) {
     InputDialogFragment dialogFragment = new InputDialogFragment();
     Bundle arguments = new Bundle();
@@ -133,6 +146,17 @@ public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHa
     return dialogFragment;
   }
 
+  /**
+   * <p>Static method to conveniently initialize a {@code InputDialogFragment} object.</p>
+   *
+   * <p>This method initialized the dialog with a layout resource ID and a {@link ViewInterceptor}.</p>
+   *
+   * @param dialogResourceID The resource-id for the dialog's layout.
+   * @param viewInterceptor The {@code ViewInterceptor} which enables the caller access to the
+   *                        dialog's {@link View} elements.
+   *
+   * @return The new {@code InputDialogFragment} object.
+   */
   public static InputDialogFragment createDialog(int dialogResourceID, ViewInterceptor viewInterceptor) {
     InputDialogFragment dialogFragment = createDialog(dialogResourceID);
     dialogFragment.setViewInterceptor(viewInterceptor);

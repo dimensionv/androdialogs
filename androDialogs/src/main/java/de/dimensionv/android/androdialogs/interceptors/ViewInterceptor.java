@@ -54,9 +54,10 @@ import android.view.View;
 /**
  * An interface to implement a callback while a dialog is created, to gain
  * control over the dialog's view's elements.
- * 
- * @author mjoellnir
+ *
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 public interface ViewInterceptor {
   /**

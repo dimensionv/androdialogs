@@ -10,7 +10,9 @@ import java.util.Calendar;
  * <p>It's specifically meant to get the date/time information of Date/Time dialogs after the user
  * has confirmed his selection.</p>
  *
- * @author mjoellnir
+ * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 public interface CalenderDialogActionHandler extends ActionHandler {
   /**

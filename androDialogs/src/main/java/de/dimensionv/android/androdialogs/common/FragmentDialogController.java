@@ -68,9 +68,10 @@ import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
  * Activity calling this dialog not implement this interface, a
  * ClassCastException will be thrown with an appropriate error-message.
  * </p>
- * 
- * @author mjoellnir
+ *
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public class FragmentDialogController<T extends ActionHandler> {

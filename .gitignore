@@ -24,6 +24,10 @@ workspace.xml
 tasks.xml
 atlassian-ide-plugin.xml
 
+# NetBeans
+nb-configuration.xml
+nbproject/
+
 # Maven
 target
 release.properties
@@ -37,6 +41,11 @@ proguard.cfg
 # Gradle
 .gradle
 build
+
+# Backup file patterns
+**/*.bak
+**/*~
+**/*.*~
 
 #Personal Files
 credentials.properties

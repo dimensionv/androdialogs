@@ -1,10 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.dimensionv.android.androdialogs"
-	android:versionCode="1"
-	android:versionName="1.0" >
+	package="de.dimensionv.android.androdialogs">
 
-	<uses-sdk
-		android:minSdkVersion="8"
-		android:targetSdkVersion="19" />
 
 </manifest>

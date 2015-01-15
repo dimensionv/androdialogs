@@ -90,9 +90,12 @@ android {
       flavorList.add("supportlibs")
     }
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_6
+    targetCompatibility JavaVersion.VERSION_1_6
+  }
 
   ext.flavors = flavorList
-
 }
 
 dependencies {

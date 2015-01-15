@@ -50,9 +50,10 @@ package de.dimensionv.android.androdialogs.handlers;
 
 /**
  * Interface for event-handling of the notification-dialog
- * 
- * @author mjoellnir
+ *
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 public interface NotificationActionHandler extends ActionHandler {
   /**

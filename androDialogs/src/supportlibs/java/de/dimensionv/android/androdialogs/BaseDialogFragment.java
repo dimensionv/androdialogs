@@ -71,8 +71,9 @@ import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
  * ClassCastException will be thrown with an appropriate error-message.
  * </p>
  *
- * @author mjoellnir
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public abstract class BaseDialogFragment<T extends ActionHandler> extends DialogFragment implements DialogFragmentInterface {
@@ -100,7 +101,7 @@ public abstract class BaseDialogFragment<T extends ActionHandler> extends Dialog
    * @param registerHandler Flag whether to register an <code>ActionHandler</code> or not.
    */
   public BaseDialogFragment(boolean registerHandler) {
-    controller = new FragmentDialogController<>(registerHandler, this);
+    controller = new FragmentDialogController<T>(registerHandler, this);
   }
 
 

@@ -7,6 +7,10 @@ import android.os.Bundle;
 
 /**
  * Base interface for all dialog fragments, to create an independency of the various build flavors.
+ *
+ * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 public interface DialogFragmentInterface extends DialogInterface.OnCancelListener, DialogInterface.OnClickListener {
   Activity getActivity();

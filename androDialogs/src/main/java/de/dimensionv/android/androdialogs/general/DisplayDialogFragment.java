@@ -60,13 +60,12 @@ import de.dimensionv.android.androdialogs.handlers.ActionHandler;
 import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 
 /**
- * <p>
- * A DisplayDialog is a dialog which can be used to display something that does not require much
- * interaction from user-side. A good example is a progress-dialog.
- * </p>
- * 
- * @author mjoellnir
+ * <p> A DisplayDialog is a dialog which can be used to display something that does not require much
+ * interaction from user-side. A good example is a progress-dialog. </p>
+ *
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
@@ -88,11 +87,12 @@ public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
   /**
    * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
    * resource-id.</p>
+   * <p>The method takes care of proper instantiation and initialization of the the
+   * fragment, and then returns it.</p>
    *
-   * The method takes care of proper instantiation and initialization of the the fragment, and then
-   * returns it.
+   * @param dialogResourceID
+   *     The layout resource ID which should be displayed by this dialog fragment.
    *
-   * @param dialogResourceID The layout resource ID which should be displayed by this dialog fragment.
    * @return The new <code>DisplayDialogFragment</code> object.
    */
   public static DisplayDialogFragment createDialog(int dialogResourceID) {
@@ -106,13 +106,14 @@ public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
   /**
    * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
    * resource-id and a ViewInterceptor.</p>
+   * <p>The method takes care of proper instantiation and initialization of the the fragment, and then
+   * returns it.</p>
    *
-   * The method takes care of proper instantiation and initialization of the the fragment, and then
-   * returns it.
-   *
-   * @param dialogResourceID The layout resource ID which should be displayed by this dialog fragment.
-   * @param viewInterceptor The <code>ViewInterceptor</code>-object that should be used to cease
-   *                        control over the dialog's view-elements.
+   * @param dialogResourceID
+   *     The layout resource ID which should be displayed by this dialog fragment.
+   * @param viewInterceptor
+   *     The <code>ViewInterceptor</code>-object that should be used to cease control over the
+   *     dialog's view-elements.
    *
    * @return The new <code>DisplayDialogFragment</code> object.
    */

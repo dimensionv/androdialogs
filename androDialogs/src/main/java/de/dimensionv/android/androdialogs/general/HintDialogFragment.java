@@ -3,6 +3,7 @@
  */
 package de.dimensionv.android.androdialogs.general;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -18,8 +19,11 @@ import de.dimensionv.android.androdialogs.common.DialogConstants;
 import de.dimensionv.android.androdialogs.handlers.HintActionHandler;
 
 /**
- * @author mjoellnir
- * 
+ * <p>A simple dialog for showing hints and tips with a single, neutral "OK"-close-button.</p>
+ *
+ * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
@@ -32,12 +36,11 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
 
   /**
    * This method will be invoked when a button in the dialog is clicked.
-   * 
+   *
    * @param dialog
-   *          The dialog that received the click.
+   *     The dialog that received the click.
    * @param which
-   *          The button that was clicked (e.g. BUTTON1) or the position of the
-   *          item clicked.
+   *     The button that was clicked (e.g. BUTTON1) or the position of the item clicked.
    */
   @Override
   public void onClick(DialogInterface dialog, int which) {
@@ -52,6 +55,7 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
   @Override
   public void populateDialog(Builder builder, Bundle arguments) {
     Activity activity = getActivity();
+    @SuppressLint("InflateParams")
     View view = activity.getLayoutInflater().inflate(R.layout.hint_dialog_fragment, null);
     TextView tv = (TextView) view.findViewById(R.id.tvHintMessage);
     cbShowAgain = (CheckBox) view.findViewById(R.id.cbShowAgain);
@@ -64,11 +68,20 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
   }
 
   /**
-   * <p>Convenience method</p>
+   * <p>Static method to conveniently initialize a {@code HintDialogFragment} object.</p>
+   * <p/>
+   * <p>This method initializes the dialog fragment with the given {@code title}, {@code messageID}
+   * and {@code hintID}.</p>
+   *
    * @param titleID
+   *     The {@link String} resource ID of the title.
    * @param messageID
+   *     The {@link String} resource ID of the hint-message.
    * @param hintID
-   * @return
+   *     The ID of the hint. This can be any arbitrary integer number with the purpose to help you
+   *     identify the hint.
+   *
+   * @return The new {@code HintDialogFragment} object.
    */
   public static HintDialogFragment createDialog(int titleID, int messageID, int hintID) {
     HintDialogFragment dialogFragment = new HintDialogFragment();

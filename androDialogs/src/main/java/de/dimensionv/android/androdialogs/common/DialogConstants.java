@@ -6,7 +6,9 @@ package de.dimensionv.android.androdialogs.common;
 /**
  * Constants for internal use with the arguments <code>Bundle</code>.
  *
- * @author mjoellnir
+ * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 public class DialogConstants {
   // constants for internal use only

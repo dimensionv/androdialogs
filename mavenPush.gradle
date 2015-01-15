@@ -38,11 +38,12 @@ def minorVersionCode = versionProps['MINOR'].toInteger()
 def hotfixVersionCode = versionProps['HOTFIX'].toInteger()
 def buildNr = versionProps['BUILD_NUMBER'].toInteger()
 ext.'snapshotBuild' = versionProps['SNAPSHOT_BUILD'].toBoolean()
-def versionString = String.format("%d.%d.%d-%d", majorVersionCode, minorVersionCode, hotfixVersionCode, buildNr)
+def versionString = String.format("%d.%d.%d", majorVersionCode, minorVersionCode, hotfixVersionCode)
 
 def String javaDocTask
 def String javaDocBundleTask
 def String sourcesBundleTask
+def String bundleAllTask
 
 
 def isReleaseBuild() {
@@ -60,24 +61,13 @@ def getSnapshotRepositoryUrl() {
 }
 
 android.libraryVariants.all { variant ->
-  def vname = variant.buildType.name
-
   javaDocTask = "javadoc${variant.name.capitalize()}"
   javaDocBundleTask = "bundleJavadoc${variant.name.capitalize()}"
   sourcesBundleTask = "bundleSources${variant.name.capitalize()}"
+  bundleAllTask = "bundleAll${variant.name.capitalize()}"
 
-  if (vname.toUpperCase().contains('DEBUG')) {
+  if (variant.buildType.name.toUpperCase().contains('DEBUG')) {
     return; // Skip debug builds.
-  }
-
-  if (!android.ext.has('variantSources')) {
-    android.ext.variantSources = new HashMap<String, FileCollection>()
-  }
-
-  android.ext.flavors.each {
-    if (variant.name.startsWith(it)) {
-      android.ext.variantSources[it] = variant.javaCompile.source
-    }
   }
 
   task(javaDocTask, type: Javadoc) {
@@ -95,7 +85,7 @@ android.libraryVariants.all { variant ->
     failOnError false
   }
 
-  task(javaDocBundleTask, type: Jar) {
+  task(javaDocBundleTask, type: Jar, dependsOn: javaDocTask) {
     description "Bundles Javadoc into zip for $variant.name."
     classifier = 'javadoc-' + variant.name
     from tasks[javaDocTask]
@@ -129,8 +119,10 @@ afterEvaluate { project ->
 
         android.ext.flavors.each {
           def String flavorRelease = it + 'Release'
+          def String flavorName = it
+
           addFilter(it) { artifact, file ->
-            artifact.attributes.classifier.contains(flavorRelease)
+            artifact.attributes.classifier.contains(flavorRelease) || artifact.name.contains('pom')
           }
 
           pom(it).groupId = POM_GROUP_ID
@@ -138,7 +130,7 @@ afterEvaluate { project ->
           pom(it).version = versionString
 
           pom(it).project {
-            def String pomName = POM_NAME + " (${it})"
+            def String pomName = POM_NAME + '-' + flavorName
             name pomName
             packaging POM_PACKAGING
             description POM_DESCRIPTION

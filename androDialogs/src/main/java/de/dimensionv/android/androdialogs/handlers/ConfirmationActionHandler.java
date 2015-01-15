@@ -52,9 +52,10 @@ import de.dimensionv.android.androdialogs.common.DialogFragmentInterface;
 
 /**
  * Interface for event-handling of the confirmation-dialog
- * 
- * @author mjoellnir
+ *
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 public interface ConfirmationActionHandler  extends ActionHandler {
   /**

@@ -63,12 +63,11 @@ import de.dimensionv.android.androdialogs.common.DialogConstants;
 import de.dimensionv.android.androdialogs.handlers.NotificationActionHandler;
 
 /**
- * <p>
- * A simple notification-dialog with a single, neutral "OK"-close-button.
- * </p>
- * 
- * @author mjoellnir
+ * <p> A simple notification-dialog with a single, neutral "OK"-close-button.</p>
+ *
+ * @author Volkmar Seifert
  * @version 1.0
+ * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
 public class NotificationDialogFragment extends BaseDialogFragment<NotificationActionHandler> {
@@ -79,12 +78,11 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
 
   /**
    * This method will be invoked when a button in the dialog is clicked.
-   * 
+   *
    * @param dialog
-   *          The dialog that received the click.
+   *     The dialog that received the click.
    * @param which
-   *          The button that was clicked (e.g. BUTTON1) or the position of the
-   *          item clicked.
+   *     The button that was clicked (e.g. BUTTON1) or the position of the item clicked.
    */
   @Override
   public void onClick(DialogInterface dialog, int which) {
@@ -97,9 +95,8 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
   }
 
   /**
-   * This method returns the notification-id provided to this
-   * NotificationDialogFragment.
-   * 
+   * This method returns the notification-id provided to this NotificationDialogFragment.
+   *
    * @return the notificationID
    */
   public int getNotificationID() {
@@ -119,6 +116,22 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
     builder.setNeutralButton(R.string.OK, this);
   }
 
+  /**
+   * <p>Static method to conveniently initialize a {@code NotificationDialogFragment} object.</p>
+   * <p/>
+   * <p>This method initializes the dialog fragment with the given {@code titleID}, {@code
+   * messageID} and {@code notificationID}.</p>
+   *
+   * @param titleID
+   *     The {@link String} resource ID of the title.
+   * @param messageID
+   *     The {@link String} resource ID of the hint-message.
+   * @param notificationID
+   *     The ID of the hint. This can be any arbitrary integer number with the purpose to help you
+   *     identify the hint.
+   *
+   * @return The new {@code NotificationDialogFragment} object.
+   */
   public static NotificationDialogFragment createDialog(int titleID, int messageID, int notificationID) {
     NotificationDialogFragment dialogFragment = new NotificationDialogFragment();
     Bundle arguments = new Bundle();
