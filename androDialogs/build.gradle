@@ -99,8 +99,8 @@ android {
 }
 
 dependencies {
-  //noinspection GradleCompatible
-  supportlibsCompile 'com.android.support:support-v4:20.0.0'
+  compile 'de.dimensionv:androtools:1.0.1'
+  supportlibsCompile 'com.android.support:support-v4:21.0.3'
 }
 
 apply from: '../mavenPush.gradle'

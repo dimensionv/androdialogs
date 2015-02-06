@@ -47,7 +47,7 @@
 //
 //
 // //////////////////////////////////////////////////////////////////////////
-package de.dimensionv.android.androdialogs.general;
+package de.dimensionv.android.androdialogs.dialogs;
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -87,8 +87,8 @@ public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
   /**
    * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
    * resource-id.</p>
-   * <p>The method takes care of proper instantiation and initialization of the the
-   * fragment, and then returns it.</p>
+   * <p>The method takes care of proper instantiation and initialization of the dialog fragment,
+   * and then returns it. The returned dialog fragment will not be cancelable by the user.</p>
    *
    * @param dialogResourceID
    *     The layout resource ID which should be displayed by this dialog fragment.
@@ -96,10 +96,48 @@ public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
    * @return The new <code>DisplayDialogFragment</code> object.
    */
   public static DisplayDialogFragment createDialog(int dialogResourceID) {
+    return createDialog(dialogResourceID, false);
+  }
+
+  /**
+   * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
+   * resource-id.</p>
+   * <p>The method takes care of proper instantiation and initialization of the the
+   * fragment, and then returns it.</p>
+   *
+   * @param dialogResourceID
+   *     The layout resource ID which should be displayed by this dialog fragment.
+   * @param cancelable
+   *     Whether this dialog is cancellable or not.
+   *
+   * @return The new <code>DisplayDialogFragment</code> object.
+   */
+  public static DisplayDialogFragment createDialog(int dialogResourceID, boolean cancelable) {
     DisplayDialogFragment dialogFragment = new DisplayDialogFragment();
     Bundle arguments = new Bundle();
     arguments.putInt(DialogConstants.DIALOG_RESOURCE_ID, dialogResourceID);
     dialogFragment.setArguments(arguments);
+    dialogFragment.setCancelable(cancelable);
+    return dialogFragment;
+  }
+
+  /**
+   * <p>Convenience method to easily create a new dialog-fragment by providing the appropriate
+   * resource-id and a ViewInterceptor.</p>
+   * <p>The method takes care of proper instantiation and initialization of the the fragment, and then
+   * returns it. The returned dialog fragment will not be cancelable by the user.</p>
+   *
+   * @param dialogResourceID
+   *     The layout resource ID which should be displayed by this dialog fragment.
+   * @param viewInterceptor
+   *     The <code>ViewInterceptor</code>-object that should be used to cease control over the
+   *     dialog's view-elements.
+   *
+   * @return The new <code>DisplayDialogFragment</code> object.
+   */
+  public static DisplayDialogFragment createDialog(int dialogResourceID, ViewInterceptor viewInterceptor) {
+    DisplayDialogFragment dialogFragment = createDialog(dialogResourceID);
+    dialogFragment.setViewInterceptor(viewInterceptor);
     return dialogFragment;
   }
 
@@ -114,11 +152,13 @@ public class DisplayDialogFragment extends BaseDialogFragment<ActionHandler> {
    * @param viewInterceptor
    *     The <code>ViewInterceptor</code>-object that should be used to cease control over the
    *     dialog's view-elements.
+   * @param cancelable
+   *     Whether this dialog is cancellable or not.
    *
    * @return The new <code>DisplayDialogFragment</code> object.
    */
-  public static DisplayDialogFragment createDialog(int dialogResourceID, ViewInterceptor viewInterceptor) {
-    DisplayDialogFragment dialogFragment = createDialog(dialogResourceID);
+  public static DisplayDialogFragment createDialog(int dialogResourceID, ViewInterceptor viewInterceptor, boolean cancelable) {
+    DisplayDialogFragment dialogFragment = createDialog(dialogResourceID, cancelable);
     dialogFragment.setViewInterceptor(viewInterceptor);
     return dialogFragment;
   }

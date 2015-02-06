@@ -54,16 +54,16 @@ import de.dimensionv.android.androdialogs.common.DialogFragmentInterface;
  * Interface for event-handling of the confirmation-dialog
  *
  * @author Volkmar Seifert
- * @version 2.0
- * @since API 1.0.0
+ * @version 1.0
+ * @since API 2.0.0
  */
-public interface ConfirmationActionHandler  extends CancelActionHandler {
+public interface CancelActionHandler extends ActionHandler {
   /**
-   * Event-handler method when the user presses the confirmation-button in the
-   * confirmation-dialog.
+   * Event-handler method when the user presses the cancel-button in the
+   * dialog.
    * 
    * @param dialog
    *          The Dialog in which the button was pressed.
    */
-  public void onConfirm(DialogFragmentInterface dialog);
+  public void onCancel(DialogFragmentInterface dialog);
 }
