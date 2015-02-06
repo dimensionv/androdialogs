@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="dialogConfirmDeletion" formatted="false">Confirm deletion of this entry, please:\n[%s]</string><string name="dialogConfirmDeletionSimple">Are you sure you want to delete the selected items?</string>
-
+	<string name="dialogConfirmDeletion" formatted="false">Confirm deletion of this entry, please:\n[%s]</string>
+  <string name="dialogConfirmDeletionSimple">Are you sure you want to delete the selected items?</string>
 	<string name="confirm">Confirm</string>
 	<string name="discard">Discard</string>
 	<string name="OK">OK</string>
 	<string name="showAgain">Show Again</string>
+  <string name="pleaseWait">Operation in progess, please wait&#8230;</string>
 
 </resources>

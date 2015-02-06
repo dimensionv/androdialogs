@@ -52,12 +52,14 @@ import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 
 import de.dimensionv.android.androdialogs.common.DialogFragmentInterface;
 import de.dimensionv.android.androdialogs.common.FragmentDialogController;
 import de.dimensionv.android.androdialogs.handlers.ActionHandler;
+import de.dimensionv.android.androdialogs.handlers.CancelActionHandler;
 import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 
 /**
@@ -130,6 +132,15 @@ public abstract class BaseDialogFragment<T extends ActionHandler> extends Dialog
   public void onAttach(Activity activity) {
     super.onAttach(activity);
     controller.onAttach(activity);
+  }
+
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    super.onCancel(dialog);
+    ActionHandler actionHandler = controller.getActionHandler();
+    if((actionHandler != null) && (actionHandler instanceof CancelActionHandler)) {
+      ((CancelActionHandler) actionHandler).onCancel(this);
+    }
   }
 
   /**

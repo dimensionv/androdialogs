@@ -47,13 +47,14 @@
 //
 //
 // //////////////////////////////////////////////////////////////////////////
-package de.dimensionv.android.androdialogs.general;
+package de.dimensionv.android.androdialogs.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.util.Linkify;
+import android.view.LayoutInflater;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -61,12 +62,13 @@ import de.dimensionv.android.androdialogs.BaseDialogFragment;
 import de.dimensionv.android.androdialogs.R;
 import de.dimensionv.android.androdialogs.common.DialogConstants;
 import de.dimensionv.android.androdialogs.handlers.NotificationActionHandler;
+import de.dimensionv.android.androdialogs.interceptors.ViewInterceptor;
 
 /**
  * <p> A simple notification-dialog with a single, neutral "OK"-close-button.</p>
  *
  * @author Volkmar Seifert
- * @version 1.0
+ * @version 2.0
  * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
@@ -83,14 +85,34 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
    *     The dialog that received the click.
    * @param which
    *     The button that was clicked (e.g. BUTTON1) or the position of the item clicked.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @Override
   public void onClick(DialogInterface dialog, int which) {
     switch(which) {
       case DialogInterface.BUTTON_NEUTRAL: {
-        controller.getActionHandler().onClose(getArguments().getInt(DialogConstants.NOTIFICATION_ID));
+        NotificationActionHandler actionHandler = controller.getActionHandler();
+        if(actionHandler != null) {
+          actionHandler.onClose(getArguments().getInt(DialogConstants.NOTIFICATION_ID));
+        }
         break;
       }
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @since Class 2.0
+   * @since API 2.0.0
+   */
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    NotificationActionHandler actionHandler = controller.getActionHandler();
+    if(actionHandler != null) {
+      actionHandler.onClose(getArguments().getInt(DialogConstants.NOTIFICATION_ID));
     }
   }
 
@@ -98,6 +120,9 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
    * This method returns the notification-id provided to this NotificationDialogFragment.
    *
    * @return the notificationID
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public int getNotificationID() {
     return getArguments().getInt(DialogConstants.NOTIFICATION_ID);
@@ -106,13 +131,32 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
   @Override
   public void populateDialog(Builder builder, Bundle arguments) {
     Activity activity = getActivity();
-    ScrollView sv = new ScrollView(activity);
-    TextView tv = new TextView(activity);
-    tv.setText(arguments.getInt(DialogConstants.MESSAGE));
-    Linkify.addLinks(tv, Linkify.EMAIL_ADDRESSES | Linkify.WEB_URLS);
-    sv.addView(tv);
-    builder.setView(sv);
-    builder.setTitle(arguments.getInt(DialogConstants.TITLE));
+
+    if(arguments.getInt(DialogConstants.DIALOG_RESOURCE_ID, Integer.MIN_VALUE) > Integer.MIN_VALUE) {
+
+      boolean hasViewIntercepter = getViewInterceptor() != null;
+      if(!hasViewIntercepter && (activity instanceof ViewInterceptor)) {
+        setViewInterceptor((ViewInterceptor) activity);
+      } else if(!hasViewIntercepter) {
+        throw new IllegalStateException("Custom layout requires the implementation of a ViewInterceptor.");
+      }
+      LayoutInflater li = activity.getLayoutInflater();
+      builder.setView(callInterceptor(li.inflate(arguments.getInt(DialogConstants.DIALOG_RESOURCE_ID), null, false)));
+
+    } else {
+
+      ScrollView sv = new ScrollView(activity);
+      TextView tv = new TextView(activity);
+      tv.setText(arguments.getInt(DialogConstants.MESSAGE_RESOURCE_ID));
+      Linkify.addLinks(tv, Linkify.EMAIL_ADDRESSES | Linkify.WEB_URLS);
+      sv.addView(tv);
+      builder.setView(sv);
+    }
+
+    int titleID = arguments.getInt(DialogConstants.TITLE_RESOURCE_ID, Integer.MIN_VALUE);
+    if(titleID > Integer.MIN_VALUE) {
+      builder.setTitle(arguments.getInt(DialogConstants.TITLE_RESOURCE_ID));
+    }
     builder.setNeutralButton(R.string.OK, this);
   }
 
@@ -125,18 +169,50 @@ public class NotificationDialogFragment extends BaseDialogFragment<NotificationA
    * @param titleID
    *     The {@link String} resource ID of the title.
    * @param messageID
-   *     The {@link String} resource ID of the hint-message.
+   *     The {@link String} resource ID of the notification-message.
    * @param notificationID
-   *     The ID of the hint. This can be any arbitrary integer number with the purpose to help you
-   *     identify the hint.
+   *     The ID of the notification. This can be any arbitrary integer number with the purpose to help you
+   *     identify the notification.
    *
    * @return The new {@code NotificationDialogFragment} object.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public static NotificationDialogFragment createDialog(int titleID, int messageID, int notificationID) {
     NotificationDialogFragment dialogFragment = new NotificationDialogFragment();
     Bundle arguments = new Bundle();
-    arguments.putInt(DialogConstants.TITLE, titleID);
-    arguments.putInt(DialogConstants.MESSAGE, messageID);
+    arguments.putInt(DialogConstants.TITLE_RESOURCE_ID, titleID);
+    arguments.putInt(DialogConstants.MESSAGE_RESOURCE_ID, messageID);
+    arguments.putInt(DialogConstants.NOTIFICATION_ID, notificationID);
+    dialogFragment.setArguments(arguments);
+    return dialogFragment;
+  }
+
+  /**
+   * <p>Static method to conveniently initialize a {@code NotificationDialogFragment} object.</p>
+   * <p/>
+   * <p>This method initializes the dialog fragment with the given {@code layoutID}, {@code titleID}
+   * and {@code notificationID}.</p>
+   *
+   * @param layoutID
+   *     The resource ID of the layout that should be used instead of the default.
+   * @param titleID
+   *     The {@link String} resource ID of the title.
+   * @param notificationID
+   *     The ID of the notification. This can be any arbitrary integer number with the purpose to help you
+   *     identify the notification.
+   *
+   * @return The new {@code NotificationDialogFragment} object.
+   *
+   * @since Class 2.0
+   * @since API 2.0.0
+   */
+  public static NotificationDialogFragment createCustomDialog(int layoutID, int titleID, int notificationID) {
+    NotificationDialogFragment dialogFragment = new NotificationDialogFragment();
+    Bundle arguments = new Bundle();
+    arguments.putInt(DialogConstants.DIALOG_RESOURCE_ID, layoutID);
+    arguments.putInt(DialogConstants.TITLE_RESOURCE_ID, titleID);
     arguments.putInt(DialogConstants.NOTIFICATION_ID, notificationID);
     dialogFragment.setArguments(arguments);
     return dialogFragment;

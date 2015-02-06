@@ -48,7 +48,7 @@
 //
 //
 // //////////////////////////////////////////////////////////////////////////
-package de.dimensionv.android.androdialogs.general;
+package de.dimensionv.android.androdialogs.dialogs;
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -82,14 +82,14 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
 
   @Override
   public void populateDialog(Builder builder, Bundle arguments) {
-    int messageResourceID = arguments.getBoolean(DialogConstants.SIMPLE)
+    int messageResourceID = arguments.getBoolean(DialogConstants.SIMPLE_MESSAGE)
                               ? R.string.dialogConfirmDeletionSimple
                               : R.string.dialogConfirmDeletion;
 
     String data = arguments.getString(DialogConstants.DATA);
 
     if(data != null) {
-      String pattern = getResources().getString(arguments.getInt(DialogConstants.MESSAGE));
+      String pattern = getResources().getString(arguments.getInt(DialogConstants.MESSAGE_RESOURCE_ID));
       builder.setMessage(String.format(pattern, data));
     } else {
       builder.setMessage(messageResourceID);
@@ -122,7 +122,7 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
     ConfirmDeletionDialogFragment dialogFragment = new ConfirmDeletionDialogFragment();
     Bundle arguments = new Bundle();
     arguments.putString(DialogConstants.DATA, data);
-    arguments.putBoolean(DialogConstants.SIMPLE, simpleMessage);
+    arguments.putBoolean(DialogConstants.SIMPLE_MESSAGE, simpleMessage);
     dialogFragment.setArguments(arguments);
     return dialogFragment;
   }
@@ -146,7 +146,7 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
    */
   public static ConfirmDeletionDialogFragment createDialog(int messageResourceID, String data) {
     ConfirmDeletionDialogFragment dialogFragment = createDialog(data);
-    dialogFragment.getArguments().putInt(DialogConstants.MESSAGE, messageResourceID);
+    dialogFragment.getArguments().putInt(DialogConstants.MESSAGE_RESOURCE_ID, messageResourceID);
     return dialogFragment;
   }
 
@@ -173,7 +173,7 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
     super.onCancel(dialog);
     ConfirmationActionHandler actionHandler = controller.getActionHandler();
     if(actionHandler != null) {
-      actionHandler.onDiscard(this);
+      actionHandler.onCancel(this);
     }
   }
 
@@ -187,7 +187,7 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
           break;
         }
         case DialogInterface.BUTTON_NEGATIVE: {
-          actionHandler.onDiscard(this);
+          actionHandler.onCancel(this);
           break;
         }
       }

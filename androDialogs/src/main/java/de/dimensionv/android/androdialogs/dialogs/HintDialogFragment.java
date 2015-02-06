@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.dimensionv.android.androdialogs.general;
+package de.dimensionv.android.androdialogs.dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +22,7 @@ import de.dimensionv.android.androdialogs.handlers.HintActionHandler;
  * <p>A simple dialog for showing hints and tips with a single, neutral "OK"-close-button.</p>
  *
  * @author Volkmar Seifert
- * @version 1.0
+ * @version 2.0
  * @since API 1.0.0
  */
 @SuppressWarnings("UnusedDeclaration")
@@ -41,14 +41,34 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
    *     The dialog that received the click.
    * @param which
    *     The button that was clicked (e.g. BUTTON1) or the position of the item clicked.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @Override
   public void onClick(DialogInterface dialog, int which) {
     switch(which) {
       case DialogInterface.BUTTON_NEUTRAL: {
-        controller.getActionHandler().onClose(getArguments().getInt(DialogConstants.HINT_ID), cbShowAgain.isChecked());
+        HintActionHandler actionHandler = controller.getActionHandler();
+        if(actionHandler != null) {
+          actionHandler.onClose(getArguments().getInt(DialogConstants.HINT_ID), cbShowAgain.isChecked());
+        }
         break;
       }
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @since Class 2.0
+   * @since API 2.0.0
+   */
+  @Override
+  public void onCancel(DialogInterface dialog) {
+    HintActionHandler actionHandler = controller.getActionHandler();
+    if(actionHandler != null) {
+      actionHandler.onClose(getArguments().getInt(DialogConstants.HINT_ID), false);
     }
   }
 
@@ -60,10 +80,10 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
     TextView tv = (TextView) view.findViewById(R.id.tvHintMessage);
     cbShowAgain = (CheckBox) view.findViewById(R.id.cbShowAgain);
     cbShowAgain.setChecked(true);
-    tv.setText(getArguments().getInt(DialogConstants.MESSAGE));
+    tv.setText(getArguments().getInt(DialogConstants.MESSAGE_RESOURCE_ID));
     Linkify.addLinks(tv, Linkify.EMAIL_ADDRESSES | Linkify.WEB_URLS);
     builder.setView(view);
-    builder.setTitle(getArguments().getInt(DialogConstants.TITLE));
+    builder.setTitle(getArguments().getInt(DialogConstants.TITLE_RESOURCE_ID));
     builder.setNeutralButton(R.string.OK, this);
   }
 
@@ -82,12 +102,15 @@ public class HintDialogFragment extends BaseDialogFragment<HintActionHandler> {
    *     identify the hint.
    *
    * @return The new {@code HintDialogFragment} object.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public static HintDialogFragment createDialog(int titleID, int messageID, int hintID) {
     HintDialogFragment dialogFragment = new HintDialogFragment();
     Bundle arguments = new Bundle();
-    arguments.putInt(DialogConstants.TITLE, titleID);
-    arguments.putInt(DialogConstants.MESSAGE, messageID);
+    arguments.putInt(DialogConstants.TITLE_RESOURCE_ID, titleID);
+    arguments.putInt(DialogConstants.MESSAGE_RESOURCE_ID, messageID);
     arguments.putInt(DialogConstants.HINT_ID, hintID);
     dialogFragment.setArguments(arguments);
     return dialogFragment;

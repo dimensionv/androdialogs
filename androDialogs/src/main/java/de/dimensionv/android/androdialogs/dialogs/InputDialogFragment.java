@@ -47,7 +47,7 @@
 //
 //
 // //////////////////////////////////////////////////////////////////////////
-package de.dimensionv.android.androdialogs.general;
+package de.dimensionv.android.androdialogs.dialogs;
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -97,7 +97,7 @@ public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHa
     super.onCancel(dialog);
     ConfirmationActionHandler actionHandler = controller.getActionHandler();
     if(actionHandler != null) {
-      actionHandler.onDiscard(this);
+      actionHandler.onCancel(this);
     }
   }
 
@@ -120,7 +120,7 @@ public class InputDialogFragment extends BaseDialogFragment<ConfirmationActionHa
           break;
         }
         case DialogInterface.BUTTON_NEGATIVE: {
-          actionHandler.onDiscard(this);
+          actionHandler.onCancel(this);
           break;
         }
       }
