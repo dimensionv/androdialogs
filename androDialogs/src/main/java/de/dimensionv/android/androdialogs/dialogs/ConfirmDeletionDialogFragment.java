@@ -89,10 +89,10 @@ public class ConfirmDeletionDialogFragment extends BaseDialogFragment<Confirmati
     String data = arguments.getString(DialogConstants.DATA);
 
     if(data != null) {
-      String pattern = getResources().getString(arguments.getInt(DialogConstants.MESSAGE_RESOURCE_ID));
+      String pattern = getResources().getString(arguments.getInt(DialogConstants.MESSAGE_RESOURCE_ID, messageResourceID));
       builder.setMessage(String.format(pattern, data));
     } else {
-      builder.setMessage(messageResourceID);
+      builder.setMessage(arguments.getInt(DialogConstants.MESSAGE_RESOURCE_ID, messageResourceID));
     }
     builder.setPositiveButton(R.string.confirm, this);
     builder.setNegativeButton(R.string.discard, this);
