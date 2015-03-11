@@ -15,5 +15,6 @@ import android.os.Bundle;
 public interface DialogFragmentInterface extends DialogInterface.OnCancelListener, DialogInterface.OnClickListener {
   Activity getActivity();
   Bundle getArguments();
+  void setRetainInstance(boolean retain);
   void populateDialog(AlertDialog.Builder builder, Bundle arguments);
 }
