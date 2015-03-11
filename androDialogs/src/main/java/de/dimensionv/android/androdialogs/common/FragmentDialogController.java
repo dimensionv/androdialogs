@@ -98,6 +98,7 @@ public class FragmentDialogController<T extends ActionHandler> {
     actionHandlerType = type;
     this.registerHandler = registerHandler;
     this.parent = parent;
+    this.parent.setRetainInstance(true);
     dialogTag = parent.getClass().getName() + ".TAG";
   }
 
